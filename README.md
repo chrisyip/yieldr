@@ -27,6 +27,33 @@ yieldr(function* () {
 })
 ```
 
+# Yieldables
+
+You can yield anything just like [native `yield`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield).
+
+```js
+yieldr(function* () {
+  var foo = yield 'foo'
+  var isTrue = yield true
+  var zero = yield 0
+})
+```
+
+But `yieldr` will try to resolve these types:
+
+- Promises
+- Generators and generator functions
+
+```js
+var fs = require('mz/fs')
+
+yieldr(function* () {
+  var content = yield fs.readFile(FILE_PATH)
+})
+```
+
+Note: there is a [`yield*` expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield*) in ECMAScript 6, and it's designed for delegating to another generator or iterable object.
+
 # Compatibility
 
 `yieldr` requires `Promise`, you should use node `>=0.11.9` or include a polyfill (try [bluebird](https://www.npmjs.com/package/bluebird)).
