@@ -17,6 +17,12 @@ describe('yieldr()', function () {
     assert.equal(ret.constructor, Promise)
     assert.equal(typeof ret.then, 'function')
     assert.equal(typeof ret.catch, 'function')
+
+    ret = yieldr('foo')
+
+    assert.equal(ret.constructor, Promise)
+    assert.equal(typeof ret.then, 'function')
+    assert.equal(typeof ret.catch, 'function')
   })
 
   it('should pass return result to then', function (done) {
@@ -30,6 +36,13 @@ describe('yieldr()', function () {
       return foo + (yield bar())
     }).then(function (res) {
       assert.equal(res, 'foobar')
+      done()
+    })
+  })
+
+  it('should return value directly if passing non-functions or non-generator functions', function (done) {
+    yieldr('foo').then(function (res) {
+      assert.equal(res, 'foo')
       done()
     })
   })
@@ -49,10 +62,10 @@ describe('yieldr(fn)', function () {
 
   it('should catch errors', function (done) {
     yieldr(function () {
-      throw Error('Oops')
+      throw Error('error')
     }).catch(function (error) {
       assert.equal(error.constructor, Error)
-      assert.equal(error.message, 'Oops')
+      assert.equal(error.message, 'error')
       done()
     })
   })
@@ -132,11 +145,28 @@ describe('yieldr(fn*)', function () {
   })
 
   it('should catch errors', function (done) {
-    yieldr(function* () {
-      throw Error('Oops')
-    }).catch(function (error) {
-      assert.equal(error.constructor, Error)
-      assert.equal(error.message, 'Oops')
+    Promise.all([
+      new Promise(function (res) {
+        yieldr(function* () {
+          yield new Promise(function (res, rej) {
+            rej('error')
+          })
+        }).catch(function (error) {
+          assert.equal(error, 'error')
+          res()
+        })
+      }),
+
+      new Promise(function (res) {
+        yieldr(function* () {
+          throw Error('error')
+        }).catch(function (error) {
+          assert.equal(error.constructor, Error)
+          assert.equal(error.message, 'error')
+          res()
+        })
+      })
+    ]).then(function () {
       done()
     })
   })
