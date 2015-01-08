@@ -35,7 +35,7 @@ function runGenerator (makeGenerator) {
 
 function calling (func, thisArg, args) {
   if (typeof func !== 'function') {
-    return func
+    return Promise.resolve(func)
   }
 
   var ctx = thisArg == null ? this : thisArg
