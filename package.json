@@ -1,6 +1,6 @@
 {
   "name": "yieldr",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Run functions and generator functions, and wrap result into a promise.",
   "main": "index.js",
   "scripts": {
