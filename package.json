@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chrisyip/calling.git"
+    "url": "https://github.com/chrisyip/yieldr.git"
   },
   "keywords": [
     "generator",
@@ -23,9 +23,9 @@
   "author": "Chris Yip",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chrisyip/calling/issues"
+    "url": "https://github.com/chrisyip/yieldr/issues"
   },
-  "homepage": "https://github.com/chrisyip/calling",
+  "homepage": "https://github.com/chrisyip/yieldr",
   "devDependencies": {
     "istanbul": "^0.3.5",
     "jshint": "^2.5.11",

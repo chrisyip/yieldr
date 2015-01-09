@@ -33,7 +33,7 @@ function runGenerator (makeGenerator) {
   }
 }
 
-function calling (func, thisArg, args) {
+function yieldr (func, thisArg, args) {
   if (typeof func !== 'function') {
     return Promise.resolve(func)
   }
@@ -50,13 +50,13 @@ function calling (func, thisArg, args) {
           })
 }
 
-Object.defineProperty(calling, 'wrap', {
+Object.defineProperty(yieldr, 'wrap', {
   enumerable: true,
   value: function (func) {
     return function () {
-      return calling(func, this, arguments)
+      return yieldr(func, this, arguments)
     }
   }
 })
 
-module.exports = calling
+module.exports = yieldr
